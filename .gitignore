@@ -12,6 +12,7 @@
 .env
 .env.backup
 composer.lock
+yarn.lock
 .phpunit.result.cache
 docker-compose.override.yml
 Homestead.json
