@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
 .auth-layout-wrap {
     display: flex;
     flex-direction: column;
@@ -5,25 +7,9 @@
     align-items: center;
     min-height: 100vh;
     background-size: cover;
-    background: url('./../../../images/photo-wide-4.jpg');
     .auth-content {
         min-width: 340px;
         margin: auto;
-    }
-}
-
-.auth-right {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-}
-
-.auth-logo {
-    img {
-        width: 100px;
-        height: 100px;
     }
 }
 
@@ -37,11 +23,152 @@
 @media (max-width: 767px) {
     .auth-layout-wrap {
         .auth-content {
-            padding: 15px;
+            padding: 25px;
+            width: 100%;
+            box-shadow: unset;
             min-width: 320px;
         }
     }
-    .auth-right {
-        padding: 80px 15px;
+}
+
+.auth-content {
+    background-color: #fff;
+    display: flex;
+    border-radius: 1em;
+    width: 30vw;
+    flex-direction: column;
+    padding: 2em;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    position: relative;
+    .message {
+        background-color: #EBECF0;
+        border-radius: 0.5em;
+        padding: 1em;
     }
+    .red {
+        background-color: #e45656a4;
+        color: #fff;
+        visibility: visible;
+    }
+    .green {
+        background-color: rgba(109, 209, 109, 0.664);
+        color: #fff;
+        visibility: visible;
+    }
+    .visibility {
+        visibility: hidden;
+    }
+    .banner_high {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 2em 0;
+        img {
+            height: 3em;
+        }
+    }
+
+    span {
+        text-align: center;
+        margin: 1em 0;
+        color: #677083;
+        a {
+            color: #000;
+        }
+    }
+
+    .validation-observer{
+        .b-form{
+            background-color: #fff;
+            display: flex;
+            border-radius: 1em;
+            flex-direction: column;
+            position: relative;
+            .log {
+                background-color: #5180e1;
+                padding: 1.4em;
+                color: #fff;
+                border-radius: 0.7em;
+                border: 1px solid #5180e1;
+                transition: 250ms;
+                cursor: pointer;
+                &:hover {
+                    border: 1px solid #5180e1;
+                    background-color: transparent;
+                    color: #000;
+                }
+            }
+            .validation-provider{
+                padding: 0;
+                margin: 0.5em;
+                .b-form-group{
+                    display: flex;
+                    flex-direction: column;
+                    margin: 0;
+                    legend {
+                        text-align: initial;
+                        color: initial;
+                        margin: 0.2em;
+                        font-size: small;
+                        padding: 0;
+                    }
+                    div {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        width: 100%;
+                        .b-form-input{
+                            width: 100%;
+                            padding: 1em;
+                            display: flex;
+                            border: 1px solid #EBECF0;
+                            border-radius: 0.7em;
+                            box-shadow: rgba(60, 64, 67, 0.3) 0px 0px 0px 0px, rgba(60, 64, 67, 0.15) 0px 0px 3px 0px;
+                            background-size: 50px;
+                            font-size: small;
+                        }
+                        .b-form-input.invalid {
+                            border: 1px solid #e45656a4;
+                        }
+                        img {
+                            width: 2em;
+                            margin: 0 0.5em;
+                            position: absolute;
+                            right: 5px;
+                            top: 12px;
+                        }
+                    }
+                }
+            }
+            .check_bar {
+                margin: 1em 0;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                a {
+                    color: #000;
+                }
+                div {
+                    input[type=checkbox] {
+                        margin: 0 1em;
+                    }
+                }
+            }
+            .password_bar {
+                display: flex;
+                width: 100%;
+                .bar {
+                    width: 25%;
+                    height: 6px;
+                    background-color: #EBECF0;
+                    border-radius: 1em;
+                    margin: 6px;
+                }
+                .green {
+                    background-color: #5180e1;
+                }
+            }
+        }
+    }
+
 }

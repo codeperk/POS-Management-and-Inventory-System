@@ -1,78 +1,94 @@
 <template>
-  <div class="auth-layout-wrap">
-    <div class="auth-content">
-      <div class="card o-hidden">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="p-4">
-              <div class="auth-logo text-center mb-30">
-                <img :src="'/images/logo.png'">
-              </div>
-              <h1 class="mb-3 text-18">{{$t('SignIn')}}</h1>
-              <validation-observer ref="submit_login">
-                <b-form @submit.prevent="Submit_Login">
-                  <validation-provider
-                    name="Email Address"
-                    :rules="{ required: true}"
-                    v-slot="validationContext"
-                  >
-                    <b-form-group :label="$t('Email_Address')" class="text-12">
-                      <b-form-input
-                        :state="getValidationState(validationContext)"
-                        aria-describedby="Email-feedback"
-                        class="form-control-rounded"
-                        type="text"
-                        v-model="email"
-                        email
-                      ></b-form-input>
-                      <b-form-invalid-feedback id="Email-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
-                    </b-form-group>
-                  </validation-provider>
-
-                  <validation-provider
-                    name="Password"
-                    :rules="{ required: true}"
-                    v-slot="validationContext"
-                  >
-                    <b-form-group :label="$t('password')" class="text-12">
-                      <b-form-input
-                        :state="getValidationState(validationContext)"
-                        aria-describedby="Password-feedback"
-                        class="form-control-rounded"
-                        type="password"
-                        v-model="password"
-                      ></b-form-input>
-                      <b-form-invalid-feedback
-                        id="Password-feedback"
-                      >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
-                    </b-form-group>
-                  </validation-provider>
-
-                  <b-button
-                    type="submit"
-                    tag="button"
-                    class="btn-rounded btn-block mt-2"
-                    variant="primary mt-2"
-                    :disabled="loading"
-                  >{{$t('SignIn')}}</b-button>
-                  <div v-once class="typo__p" v-if="loading">
-                    <div class="spinner sm spinner-primary mt-3"></div>
-                  </div>
-                </b-form>
-              </validation-observer>
-
-              <div class="mt-3 text-center">
-                <a href="/password/reset"  class="text-muted">
-                  <u>{{$t('Forgot_Password')}}</u>
-                </a>
-              </div>
+    <div class="auth-layout-wrap">
+        <div class="auth-content">
+            <div class="banner_high">
+                <img src="/images/icons/user.svg" alt="" />
+                <img src="/images/icons/password.svg" alt="" />
             </div>
-          </div>
+
+            <h1 class="font-weight-bold text-center">Sahara Mart India</h1>
+            <validation-observer class="validation-observer" ref="submit_login">
+                <b-form class="b-form" @submit.prevent="Submit_Login">
+                    <validation-provider
+                        class="validation-provider"
+                        name="Email Address"
+                        :rules="{ required: true}"
+                        v-slot="validationContext"
+                    >
+                        <b-form-group :label="$t('Email_Address')" class="text-12 b-form-group">
+                            <input
+                                v-bind:class="{ 'invalid': validationContext.errors[0] }"
+                                :state="getValidationState(validationContext)"
+                                placeholder="E-mail"
+                                class="b-form-input"
+                                type="text"
+                                v-model="email"
+                                email
+                            />
+                            <img
+                                v-if="email.length >= 4"
+                                src="/images/ok.svg"
+                                alt=""
+                            />
+                        </b-form-group>
+                    </validation-provider>
+                    <validation-provider
+                        class="validation-provider"
+                        name="Password"
+                        :rules="{ required: true}"
+                        v-slot="validationContext"
+                    >
+                        <b-form-group :label="$t('password')" class="text-12 b-form-group">
+                            <input
+                                v-bind:class="{ 'invalid': validationContext.errors[0] }"
+                                :state="getValidationState(validationContext)"
+                                placeholder="8 caractere minimum"
+                                class="b-form-input"
+                                type="password"
+                                v-model="password"
+                            />
+                            <img
+                                v-if="password.length >= 8"
+                                src="/images/ok.svg"
+                                alt=""
+                            />
+                        </b-form-group>
+                    </validation-provider>
+                    <div class="password_bar">
+                        <div :class="{ bar: true, green: password.length > 1 }"></div>
+                        <div :class="{ bar: true, green: password.length > 3 }"></div>
+                        <div :class="{ bar: true, green: password.length > 5 }"></div>
+                        <div :class="{ bar: true, green: password.length > 7 }"></div>
+                    </div>
+
+                    <div class="check_bar">
+                        <div>
+                            <input type="checkbox" name="" id="" />
+                            <label for="">Remember me</label>
+                        </div>
+
+                        <a href="/password/reset"  class="text-muted">{{$t('Forgot_Password')}}</a>
+                    </div>
+
+                    <b-button
+                        type="submit"
+                        tag="button"
+                        class="log"
+                        variant="primary mt-2"
+                        :disabled="loading"
+                    >{{$t('SignIn')}}</b-button>
+                    <div v-once class="typo__p" v-if="loading">
+                        <div class="spinner sm spinner-primary mt-3"></div>
+                    </div>
+                </b-form>
+            </validation-observer>
+
+            <span>No account yet? <a href="#">{{$t('SignUp')}}</a> </span>
+
         </div>
-      </div>
     </div>
-  </div>
 </template>
+
 <script>
 import { mapGetters, mapActions } from "vuex";
 import NProgress from "nprogress";
@@ -136,7 +152,7 @@ export default {
             );
 
           window.location = '/';
-           
+
           NProgress.done();
           this.loading = false;
         })
