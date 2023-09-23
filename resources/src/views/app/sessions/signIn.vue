@@ -1,12 +1,14 @@
 <template>
     <div class="auth-layout-wrap">
+        <img src="/images/logo.png" alt="" />
         <div class="auth-content">
             <div class="banner_high">
                 <img src="/images/icons/user.svg" alt="" />
                 <img src="/images/icons/password.svg" alt="" />
             </div>
 
-            <h1 class="font-weight-bold text-center">Sahara Mart India</h1>
+            <h1 class="font-weight-bold text-center">{{$t('SignIn')}}</h1>
+            <h4 class="font-weight-bold text-center">Sahara Mart India</h4>
             <validation-observer class="validation-observer" ref="submit_login">
                 <b-form class="b-form" @submit.prevent="Submit_Login">
                     <validation-provider

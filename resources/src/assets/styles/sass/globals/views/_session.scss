@@ -7,9 +7,11 @@
     align-items: center;
     min-height: 100vh;
     background-size: cover;
+    img{
+        margin-bottom: 2em;
+    }
     .auth-content {
         min-width: 340px;
-        margin: auto;
     }
 }
 
@@ -22,11 +24,18 @@
 }
 @media (max-width: 767px) {
     .auth-layout-wrap {
+        img{
+            margin-bottom: unset;
+        }
         .auth-content {
             padding: 25px;
             width: 100%;
             box-shadow: unset;
             min-width: 320px;
+
+            .banner_high{
+                display: none;
+            }
         }
     }
 }
