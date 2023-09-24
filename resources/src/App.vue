@@ -2,7 +2,7 @@
   <div v-if="Loading">
     <router-view></router-view>
 
-    <customizer></customizer>
+    <!-- <customizer></customizer> -->
   </div>
 </template>
 
