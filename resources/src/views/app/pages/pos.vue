@@ -2,126 +2,34 @@
   <div class="pos_page">
     <div class="container-fluid p-0 app-admin-wrap layout-sidebar-large clearfix" id="pos">
       <div v-if="isLoading" class="loading_page spinner spinner-primary mr-3"></div>
-      <b-row v-if="!isLoading">
-        <!-- Card Left Panel Details Sale-->
-        <b-col md="5">
-          <b-card no-body class="card-order">
-            <div class="main-header">
-              <div class="logo">
-                <router-link to="/app/dashboard">
-                  <img :src="'/images/'+currentUser.logo" alt width="60" height="60">
-                </router-link>
-              </div>
-              <div class="mx-auto"></div>
+      <!-- <b-row v-if="!isLoading">
 
-              <div class="header-part-right">
+      </b-row> -->
+      <b-row v-if="!isLoading" class="section">
+
+        <!-- Card right Of Products -->
+        <b-col md="9" class="products section">
+          <b-card no-body  class="list-grid">
+            <!-- Header -->
+            <div class="main-header">
+                <div class="logo">
+                <router-link to="/app/dashboard">
+                    <img :src="'/images/'+currentUser.logo" alt width="60" height="60">
+                </router-link>
+                </div>
+
+                <div class="mx-auto"></div>
+
+                <div class="header-part-right">
                 <!-- Full screen toggle -->
                 <i
-                  class="i-Full-Screen header-icon d-none d-sm-inline-block"
-                  @click="handleFullScreen"
+                    class="i-Full-Screen header-icon d-none d-sm-inline-block"
+                    @click="handleFullScreen"
                 ></i>
-                <!-- Grid menu Dropdown -->
-
-                <div class="dropdown">
-                  <b-dropdown
-                    id="dropdown"
-                    text="Dropdown Button"
-                    class="m-md-2"
-                    toggle-class="text-decoration-none"
-                    no-caret
-                    right
-                    variant="link"
-                  >
-                    <template slot="button-content">
-                      <i
-                        class="i-Globe text-muted header-icon"
-                        role="button"
-                        id="dropdownMenuButton"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      ></i>
-                    </template>
-                    <vue-perfect-scrollbar
-                      :settings="{ suppressScrollX: true, wheelPropagation: false }"
-                      ref="myData"
-                      class="dropdown-menu-left rtl-ps-none notification-dropdown ps scroll"
-                    >
-                      <div class="menu-icon-grid">
-                        <a @click="SetLocal('en')">
-                          <i title="en" class="flag-icon flag-icon-squared flag-icon-gb"></i> English
-                        </a>
-                        <a @click="SetLocal('fr')">
-                          <i title="fr" class="flag-icon flag-icon-squared flag-icon-fr"></i>
-                          <span class="title-lang">French</span>
-                        </a>
-                        <a @click="SetLocal('ar')">
-                          <i title="sa" class="flag-icon flag-icon-squared flag-icon-sa"></i>
-                          <span class="title-lang">Arabic</span>
-                        </a>
-                        <a @click="SetLocal('tur')">
-                          <i title="sa" class="flag-icon flag-icon-squared flag-icon-tr"></i>
-                          <span class="title-lang">Turkish</span>
-                        </a>
-
-                        <a @click="SetLocal('sm_ch')">
-                          <i title="sa" class="flag-icon flag-icon-squared flag-icon-cn"></i>
-                          <span class="title-lang">Simplified Chinese</span>
-                        </a>
-
-                        <a @click="SetLocal('thai')">
-                          <i title="sa" class="flag-icon flag-icon-squared flag-icon-tw"></i>
-                          <span class="title-lang">Thaï</span>
-                        </a>
-
-                        <a @click="SetLocal('hn')">
-                          <i title="sa" class="flag-icon flag-icon-squared flag-icon-in"></i>
-                          <span class="title-lang">Hindi</span>
-                        </a>
-
-                        <a @click="SetLocal('de')">
-                          <i title="de" class="flag-icon flag-icon-squared flag-icon-de"></i>
-                          <span class="title-lang">German</span>
-                        </a>
-                        <a @click="SetLocal('es')">
-                          <i title="es" class="flag-icon flag-icon-squared flag-icon-es"></i>
-                          <span class="title-lang">Spanish</span>
-                        </a>
-                        <a @click="SetLocal('it')">
-                          <i title="it" class="flag-icon flag-icon-squared flag-icon-it"></i>
-                          <span class="title-lang">Italien</span>
-                        </a>
-                        <a @click="SetLocal('Ind')">
-                          <i title="sa" class="flag-icon flag-icon-squared flag-icon-id"></i>
-                          <span class="title-lang">Indonesian</span>
-                        </a>
-
-                        <a @click="SetLocal('tr_ch')">
-                          <i title="sa" class="flag-icon flag-icon-squared flag-icon-cn"></i>
-                          <span class="title-lang">Traditional Chinese</span>
-                        </a>
-
-                        <a @click="SetLocal('ru')">
-                          <i title="sa" class="flag-icon flag-icon-squared flag-icon-ru"></i>
-                          <span class="title-lang">Russian</span>
-                        </a>
-
-                        <a @click="SetLocal('vn')">
-                          <i title="sa" class="flag-icon flag-icon-squared flag-icon-vn"></i>
-                          <span class="title-lang">Vietnamese</span>
-                        </a>
-                        <a @click="SetLocal('kr')">
-                          <i title="sa" class="flag-icon flag-icon-squared flag-icon-kr"></i>
-                          <span class="title-lang">Korean</span>
-                        </a>
-                      </div>
-                    </vue-perfect-scrollbar>
-                  </b-dropdown>
-                </div>
 
                 <!-- User avatar dropdown -->
                 <div class="dropdown">
-                  <b-dropdown
+                    <b-dropdown
                     id="dropdown-1"
                     text="Dropdown Button"
                     class="m-md-2 user col align-self-end"
@@ -129,35 +37,178 @@
                     no-caret
                     variant="link"
                     right
-                  >
+                    >
                     <template slot="button-content">
-                      <img
+                        <img
                         :src="'/images/avatar/'+currentUser.avatar"
                         id="userDropdown"
                         alt
                         data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false"
-                      >
+                        >
                     </template>
 
                     <div class="dropdown-menu-left" aria-labelledby="userDropdown">
-                      <div class="dropdown-header">
+                        <div class="dropdown-header">
                         <i class="i-Lock-User mr-1"></i>
                         <span>{{currentUser.username}}</span>
-                      </div>
-                      <router-link to="/app/profile" class="dropdown-item">{{$t('profil')}}</router-link>
-                      <router-link
+                        </div>
+                        <router-link to="/app/profile" class="dropdown-item">{{$t('profil')}}</router-link>
+                        <router-link
                         v-if="currentUserPermissions && currentUserPermissions.includes('setting_system')"
                         to="/app/settings/System_settings"
                         class="dropdown-item"
-                      >{{$t('Settings')}}</router-link>
-                      <a class="dropdown-item" href="#" @click.prevent="logoutUser">{{$t('logout')}}</a>
+                        >{{$t('Settings')}}</router-link>
+                        <a class="dropdown-item" href="#" @click.prevent="logoutUser">{{$t('logout')}}</a>
                     </div>
-                  </b-dropdown>
+                    </b-dropdown>
+                </div>
+                </div>
+            </div>
+            <b-row class="section">
+              <!-- <b-col md="6">
+                <button v-b-toggle.sidebar-category class="btn btn-outline-info mt-1 btn-block">
+                  <i class="i-Two-Windows"></i>
+                  {{$t('ListofCategory')}}
+                </button>
+              </b-col> -->
+              <!-- <b-col md="6">
+                <button v-b-toggle.sidebar-brand class="btn btn-outline-info mt-1 btn-block">
+                  <i class="i-Library"></i>
+                  {{$t('ListofBrand')}}
+                </button>
+              </b-col> -->
+
+
+               <!-- Product -->
+                <b-col md="12" class="mt-3 mb-3">
+
+                    <div id="autocomplete" class="autocomplete">
+                        <input
+                        :placeholder="$t('Scan_Search_Product_by_Code_Name')"
+                        @input='e => search_input = e.target.value'
+                        @keyup="search(search_input)"
+                        @focus="handleFocus"
+                        @blur="handleBlur"
+                        ref="product_autocomplete"
+                        class="autocomplete-input" />
+                        <ul class="autocomplete-result-list" v-show="focused">
+                        <li class="autocomplete-result" v-for="product_fil in product_filter" @mousedown="SearchProduct(product_fil)">{{getResultValue(product_fil)}}</li>
+                        </ul>
+                    </div>
+                </b-col>
+                <b-col md="12" class="ml-3 d-flex justify-content-between align-items-center">
+                    <h3 class="font-weight-bold mb-0">{{ $t("Brands") }}</h3>
+                    <b-pagination
+                        @change="BrandonPageChanged"
+                        :total-rows="brand_totalRows"
+                        :per-page="brand_perPage"
+                        v-model="brand_currentPage"
+                        class="my-0 gull-pagination align-items-center"
+                        align="center"
+                        first-text
+                        last-text
+                        >
+                        <p class="list-arrow m-0" slot="prev-text">
+                            <i class="i-Arrow-Left text-25"></i>
+                        </p>
+                        <p class="list-arrow m-0" slot="next-text">
+                            <i class="i-Arrow-Right text-25"></i>
+                        </p>
+                    </b-pagination>
+                </b-col>
+                <!-- Brands -->
+                <b-col md="12">
+                    <b-row>
+                        <div class="col-md-12 d-flex flex-row flex-wrap bd-highlight list-item mt-2">
+                            <div
+                                @click="GetAllBrands()"
+                                :class="{ 'brand-Active' : brand_id == ''}"
+                                class="card brand bd-highlight m-1 p-3"
+                            >
+                                <img class="brand-image" alt :src="'/images/icons/empty-cart.svg'">
+                                <div class="flex-grow-1 d-bock">
+                                    <div
+                                    class="card-body p-0 align-self-center d-flex flex-column justify-content-between align-items-lg-center"
+                                    >
+                                    <div class="item-title text-center font-size-large font-weight-bold mt-1">{{$t('All_Brand')}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="card brand bd-highlight m-1 p-3"
+                                v-for="brand in paginated_Brands"
+                                :key="brand.id"
+                                @click="Products_by_Brands(brand.id)"
+                                :class="{ 'brand-Active' : brand.id === brand_id}"
+                            >
+                                <img class="brand-image" alt :src="'/images/brands/'+brand.image">
+                                <div class="flex-grow-1 d-bock">
+                                    <div
+                                    class="card-body p-0 align-self-center d-flex flex-column justify-content-between align-items-lg-center"
+                                    >
+                                    <div class="item-title text-center font-size-large font-weight-bold mt-1">{{brand.name}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </b-row>
+                </b-col>
+                <!--  -->
+                <b-col md="12" class="ml-3 mt-5 d-flex justify-content-between align-items-center">
+                    <h3 class="font-weight-bold mb-0">{{ $t("Select Product") }}</h3>
+                    <b-pagination
+                        @change="Product_onPageChanged"
+                        :total-rows="product_totalRows"
+                        :per-page="product_perPage"
+                        v-model="product_currentPage"
+                        class="my-0 gull-pagination align-items-center"
+                        align="center"
+                        first-text
+                        last-text
+                        >
+                        <p class="list-arrow m-0" slot="prev-text">
+                            <i class="i-Arrow-Left text-25"></i>
+                        </p>
+                        <p class="list-arrow m-0" slot="next-text">
+                            <i class="i-Arrow-Right text-25"></i>
+                        </p>
+                    </b-pagination>
+                </b-col>
+              <div class="col-md-12 d-flex flex-row flex-wrap bd-highlight list-item mt-2">
+                <div
+                  @click="Check_Product_Exist(product , product.id)"
+                  v-for="product in products"
+                  class="card o-hidden bd-highlight m-2 product-card"
+                >
+                  <div class="list-thumb d-flex">
+                    <img alt :src="'/images/products/'+product.image">
+                  </div>
+                  <div class="flex-grow-1 d-bock">
+                    <div
+                      class="product-card-details card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center"
+                    >
+                      <div class="w-40 w-sm-100 item-title">{{product.name}}</div>
+                      <p class="text-muted text-small w-15 w-sm-100 mb-1">{{formatNumber(product.qte_sale , 0)}} {{product.unitSale}} Available</p>
+
+                      <span class="item-price w-15 w-sm-100">{{currentUser.currency}}{{formatNumber(product.Net_price , 2)}}<span class="text-muted text-small font-weight-600"> / {{product.unitSale}}</span></span>
+                      <p
+                        class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-badges"
+                      >
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </b-row>
+          </b-card>
+        </b-col>
+
+        <!-- Card Left Panel Details Sale-->
+        <b-col md="3" class="section">
+          <b-card no-body class="card-order border-left">
+
             <validation-observer ref="create_pos">
               <b-form @submit.prevent="Submit_Pos">
                 <b-card-body>
@@ -207,68 +258,68 @@
                     <!-- Details Product  -->
                     <b-col md="12" class="mt-2">
                       <div class="pos-detail">
-                        <div class="table-responsive">
-                          <table class="table table-striped">
-                            <thead>
-                              <tr>
-                                <th scope="col">{{$t('ProductName')}}</th>
-                                <th scope="col">{{$t('Price')}}</th>
-                                <th scope="col" class="text-center">{{$t('Qty')}}</th>
-                                <th scope="col" class="text-center">{{$t('SubTotal')}}</th>
-                                <th scope="col" class="text-center">
-                                  <i class="fa fa-trash"></i>
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr v-if="details.length <= 0">
-                                <td colspan="5">{{$t('NodataAvailable')}}</td>
-                              </tr>
-                              <tr v-for="(detail, index) in details" :key="index">
-                                <td>
-                                  <span>{{detail.code}}</span>
-                                  <br>
-                                  <span class="badge badge-success">{{detail.name}}</span>
-                                  <i @click="Modal_Updat_Detail(detail)" class="i-Edit"></i>
-                                </td>
-                                <td>{{currentUser.currency}} {{formatNumber(detail.Total_price, 2)}}</td>
-                                <td>
-                                  <div class="quantity">
-                                    <b-input-group>
-                                      <b-input-group-prepend>
-                                        <span
-                                          class="btn btn-primary btn-sm"
-                                          @click="decrement(detail ,detail.detail_id)"
-                                        >-</span>
-                                      </b-input-group-prepend>
+                        <h3 class="font-weight-bold">{{$t('Detail Items')}}</h3>
+                        <div class="empty-cart" v-if="details.length <= 0">
+                            <img src="/images/icons/empty-cart.svg" v-bind:alt="$t('NodataAvailable')">
+                            <h4 class="font-weight-bold text-center">{{$t('NodataAvailable')}}</h4>
+                        </div>
+                        <div v-for="(detail, index) in details" :key="index" class="cart-item">
+                            <div class="product-image">
+                                <img alt :src="'/images/products/'+detail.image" onerror="if (this.src != '/images/products/no-image.png') this.src = '/images/products/no-image.png';" />
+                                <a class="edit-button" @click="Modal_Updat_Detail(detail)" title="Edit Product Price">
+                                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M21.2799 6.40005L11.7399 15.94C10.7899 16.89 7.96987 17.33 7.33987 16.7C6.70987 16.07 7.13987 13.25 8.08987 12.3L17.6399 2.75002C17.8754 2.49308 18.1605 2.28654 18.4781 2.14284C18.7956 1.99914 19.139 1.92124 19.4875 1.9139C19.8359 1.90657 20.1823 1.96991 20.5056 2.10012C20.8289 2.23033 21.1225 2.42473 21.3686 2.67153C21.6147 2.91833 21.8083 3.21243 21.9376 3.53609C22.0669 3.85976 22.1294 4.20626 22.1211 4.55471C22.1128 4.90316 22.0339 5.24635 21.8894 5.5635C21.7448 5.88065 21.5375 6.16524 21.2799 6.40005V6.40005Z" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M11 4H6C4.93913 4 3.92178 4.42142 3.17163 5.17157C2.42149 5.92172 2 6.93913 2 8V18C2 19.0609 2.42149 20.0783 3.17163 20.8284C3.92178 21.5786 4.93913 22 6 22H17C19.21 22 20 20.2 20 18V13" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </a>
+                            </div>
+                            <div class="product-details">
+                                <div class="product-header">
+                                    <div class="product-title">
+                                        <span>{{detail.name}}</span>
+                                        <span class="product-code">{{detail.code}}</span>
+                                    </div>
+                                    <a class="delete-button" @click="delete_Product_Detail(detail.detail_id)" title="Delete">
+                                        <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M20.5001 6H3.5" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
+                                            <path d="M18.8332 8.5L18.3732 15.3991C18.1962 18.054 18.1077 19.3815 17.2427 20.1907C16.3777 21 15.0473 21 12.3865 21H11.6132C8.95235 21 7.62195 21 6.75694 20.1907C5.89194 19.3815 5.80344 18.054 5.62644 15.3991L5.1665 8.5" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
+                                            <path d="M9.5 11L10 16" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
+                                            <path d="M14.5 11L14 16" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
+                                            <path d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6" stroke="#1C274C" stroke-width="1.5"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                                <div class="product-calculations">
+                                    <div class="product-quantity">
+                                        <b-input-group>
+                                            <b-input-group-prepend>
+                                                <span
+                                                class="counter-btn minus"
+                                                @click="decrement(detail ,detail.detail_id)"
+                                                >
+                                                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M6 12L18 12" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    </svg>
+                                                </span>
+                                            </b-input-group-prepend>
 
-                                      <input
-                                        class="form-control"
-                                        @keyup="Verified_Qty(detail,detail.detail_id)"
-                                        v-model.number="detail.quantity"
-                                      >
+                                            <span class="counter-value">{{detail.quantity}}</span>
 
-                                      <b-input-group-append>
-                                        <span
-                                          class="btn btn-primary btn-sm"
-                                          @click="increment(detail.detail_id)"
-                                        >+</span>
-                                      </b-input-group-append>
-                                    </b-input-group>
-                                  </div>
-                                </td>
-                                 <td class="text-center">{{currentUser.currency}} {{detail.subtotal.toFixed(2)}}</td>
-                                <td>
-                                  <a
-                                    @click="delete_Product_Detail(detail.detail_id)"
-                                    title="Delete"
-                                  >
-                                    <i class="i-Close-Window text-25 text-danger"></i>
-                                  </a>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
+                                            <b-input-group-append>
+                                                <span
+                                                class="counter-btn plus"
+                                                @click="increment(detail.detail_id)"
+                                                >
+                                                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M6 12H18M12 6V18" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    </svg>
+                                                </span>
+                                            </b-input-group-append>
+                                        </b-input-group>
+                                    </div>
+                                    <div class="product-price">{{detail.quantity}} x {{currentUser.currency}}{{formatNumber(detail.Total_price, 2)}}</div>
+                                </div>
+                            </div>
                         </div>
                       </div>
                     </b-col>
@@ -278,97 +329,94 @@
                   <div class="footer_panel">
                     <b-row>
                       <b-col md="12">
+                        <div class="calculations">
+                          <span>{{$t("Items")}}</span><span class="amount">{{details.length}}(Items)</span>
+                        </div>
+                      </b-col>
+                      <b-col md="12">
+                        <div class="calculations">
+                          <span>{{$t('Sub Total')}}(%)</span><span class="amount">{{currentUser.currency}}{{subTotal.toFixed()}}</span>
+                        </div>
+                      </b-col>
+                      <b-col md="12">
+                        <div class="calculations">
+                            <span>{{$t('Discount')}}</span>
+                            <span class="amount">
+                                <validation-provider
+                                    name="Discount"
+                                    :rules="{ regex: /^\d*\.?\d*$/}"
+                                    v-slot="validationContext"
+                                >
+                                    <b-form-input
+                                        :state="getValidationState(validationContext)"
+                                        v-bind:class="{ 'invalid': validationContext.errors[0] }"
+                                        aria-describedby="Discount-feedback"
+                                        label="Discount"
+                                        v-model.number="sale.discount"
+                                        @keyup="keyup_Discount()"
+                                    ></b-form-input>
+                                </validation-provider>
+                            </span>
+                        </div>
+                      </b-col>
+                      <b-col md="12">
+                        <div class="calculations">
+                            <span>{{$t('Tax')}}(%)</span>
+                            <span class="amount">
+                                <validation-provider
+                                    name="Order Tax"
+                                    :rules="{ regex: /^\d*\.?\d*$/}"
+                                    v-slot="validationContext"
+                                >
+                                <b-form-input
+                                    :state="getValidationState(validationContext)"
+                                    v-bind:class="{ 'invalid': validationContext.errors[0] }"
+                                    aria-describedby="OrderTax-feedback"
+                                    label="Order Tax"
+                                    v-model.number="sale.tax_rate"
+                                    @keyup="keyup_OrderTax()"
+                                ></b-form-input>
+                                </validation-provider>
+                            </span>
+                        </div>
+                      </b-col>
+                      <b-col md="12">
+                        <div class="calculations">
+                            <span>{{$t('Shipping')}}</span>
+                            <span class="amount">
+                                <validation-provider
+                                    name="Shipping"
+                                    :rules="{ regex: /^\d*\.?\d*$/}"
+                                    v-slot="validationContext"
+                                >
+                                    <b-form-input
+                                        :state="getValidationState(validationContext)"
+                                        v-bind:class="{ 'invalid': validationContext.errors[0] }"
+                                        aria-describedby="Shipping-feedback"
+                                        label="Shipping"
+                                        v-model.number="sale.shipping"
+                                        @keyup="keyup_Shipping()"
+                                    ></b-form-input>
+                                </validation-provider>
+                            </span>
+                        </div>
+                      </b-col>
+                      <b-col md="12">
                         <div class="grandtotal">
-                          <span>{{$t("Total")}} : {{currentUser.currency}} {{GrandTotal.toFixed(2)}}</span>
+                          <span>{{$t("Total")}}</span><span>{{currentUser.currency}}{{GrandTotal.toFixed(2)}}</span>
                         </div>
                       </b-col>
 
-                      <!-- Order Tax  -->
-                      <b-col lg="4" md="4" sm="12">
-                        <validation-provider
-                          name="Order Tax"
-                          :rules="{ regex: /^\d*\.?\d*$/}"
-                          v-slot="validationContext"
-                        >
-                          <b-form-group :label="$t('Tax')" append="%">
-                            <b-input-group append="%">
-                              <b-form-input
-                                :state="getValidationState(validationContext)"
-                                aria-describedby="OrderTax-feedback"
-                                label="Order Tax"
-                                v-model.number="sale.tax_rate"
-                                @keyup="keyup_OrderTax()"
-                              ></b-form-input>
-                            </b-input-group>
-                            <b-form-invalid-feedback
-                              id="OrderTax-feedback"
-                            >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
-                          </b-form-group>
-                        </validation-provider>
-                      </b-col>
+                      <!-- <h3 class="font-weight-bold pl-3">{{$t('Payment Method')}}</h3> -->
 
-                      <!-- Discount -->
-                      <b-col lg="4" md="4" sm="12">
-                        <validation-provider
-                          name="Discount"
-                          :rules="{ regex: /^\d*\.?\d*$/}"
-                          v-slot="validationContext"
-                        >
-                          <b-form-group :label="$t('Discount')" append="%">
-                            <b-input-group :append="currentUser.currency">
-                              <b-form-input
-                                :state="getValidationState(validationContext)"
-                                aria-describedby="Discount-feedback"
-                                label="Discount"
-                                v-model.number="sale.discount"
-                                @keyup="keyup_Discount()"
-                              ></b-form-input>
-                            </b-input-group>
-                            <b-form-invalid-feedback
-                              id="Discount-feedback"
-                            >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
-                          </b-form-group>
-                        </validation-provider>
-                      </b-col>
-
-                      <!-- Shipping  -->
-                      <b-col lg="4" md="4" sm="12">
-                        <validation-provider
-                          name="Shipping"
-                          :rules="{ regex: /^\d*\.?\d*$/}"
-                          v-slot="validationContext"
-                        >
-                          <b-form-group :label="$t('Shipping')">
-                            <b-input-group :append="currentUser.currency">
-                              <b-form-input
-                                :state="getValidationState(validationContext)"
-                                aria-describedby="Shipping-feedback"
-                                label="Shipping"
-                                v-model.number="sale.shipping"
-                                @keyup="keyup_Shipping()"
-                              ></b-form-input>
-                            </b-input-group>
-
-                            <b-form-invalid-feedback
-                              id="Shipping-feedback"
-                            >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
-                          </b-form-group>
-                        </validation-provider>
-                      </b-col>
-
-                      <b-col md="6" sm="12">
-                        <b-button
-                          @click="Reset_Pos()"
-                          variant="danger ripple btn-rounded btn-block mt-1"
-                        >
-                          <i class="i-Power-2"></i>
-                          {{ $t("Reset") }}
+                      <b-col md="12" sm="12">
+                        <b-button type="submit" variant="primary mt-3 btn-block" class="checkout">
+                          {{ $t("Proceed for payment") }}
                         </b-button>
                       </b-col>
-                      <b-col md="6" sm="12">
-                        <b-button type="submit" variant="primary ripple mt-1 btn-rounded btn-block">
-                          <i class="i-Checkout"></i>
-                          {{ $t("payNow") }}
+                      <b-col md="12" sm="12">
+                        <b-button @click="Reset_Pos()" variant="danger btn-block mt-3" class="checkout">
+                          {{ $t("Reset") }}
                         </b-button>
                       </b-col>
                     </b-row>
@@ -526,97 +574,6 @@
                 </b-form>
               </b-modal>
             </validation-observer>
-          </b-card>
-        </b-col>
-
-        <!-- Card right Of Products -->
-        <b-col md="7">
-          <b-card class="list-grid">
-            <b-row>
-              <b-col md="6">
-                <button v-b-toggle.sidebar-category class="btn btn-outline-info mt-1 btn-block">
-                  <i class="i-Two-Windows"></i>
-                  {{$t('ListofCategory')}}
-                </button>
-              </b-col>
-              <b-col md="6">
-                <button v-b-toggle.sidebar-brand class="btn btn-outline-info mt-1 btn-block">
-                  <i class="i-Library"></i>
-                  {{$t('ListofBrand')}}
-                </button>
-              </b-col>
-
-
-               <!-- Product -->
-                <b-col md="12" class="mt-2 mb-2">
-                 
-                  <div id="autocomplete" class="autocomplete">
-                    <input 
-                     :placeholder="$t('Scan_Search_Product_by_Code_Name')"
-                      @input='e => search_input = e.target.value' 
-                      @keyup="search(search_input)"
-                      @focus="handleFocus"
-                      @blur="handleBlur"
-                      ref="product_autocomplete"
-                      class="autocomplete-input" />
-                    <ul class="autocomplete-result-list" v-show="focused">
-                      <li class="autocomplete-result" v-for="product_fil in product_filter" @mousedown="SearchProduct(product_fil)">{{getResultValue(product_fil)}}</li>
-                    </ul>
-                </div>
-                </b-col>
-
-              <div class="col-md-12 d-flex flex-row flex-wrap bd-highlight list-item mt-2">
-                <div
-                  @click="Check_Product_Exist(product , product.id)"
-                  v-for="product in products"
-                  class="card o-hidden bd-highlight m-1"
-                >
-                  <div class="list-thumb d-flex">
-                    <img alt :src="'/images/products/'+product.image">
-                  </div>
-                  <div class="flex-grow-1 d-bock">
-                    <div
-                      class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center"
-                    >
-                      <div class="w-40 w-sm-100 item-title">{{product.name}}</div>
-                      <p class="text-muted text-small w-15 w-sm-100 mb-2">{{product.code}}</p>
-
-                      <span
-                        class="badge badge-primary w-15 w-sm-100 mb-2"
-                      >{{currentUser.currency}} {{formatNumber(product.Net_price , 2)}}</span>
-                      <p
-                        class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-badges"
-                      >
-                        <span
-                          class="badge badge-info"
-                        >{{formatNumber(product.qte_sale , 2)}} {{product.unitSale}}</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </b-row>
-            <b-row>
-              <b-col md="12" class="mt-4">
-                <b-pagination
-                  @change="Product_onPageChanged"
-                  :total-rows="product_totalRows"
-                  :per-page="product_perPage"
-                  v-model="product_currentPage"
-                  class="my-0 gull-pagination align-items-center"
-                  align="center"
-                  first-text
-                  last-text
-                >
-                  <p class="list-arrow m-0" slot="prev-text">
-                    <i class="i-Arrow-Left text-40"></i>
-                  </p>
-                  <p class="list-arrow m-0" slot="next-text">
-                    <i class="i-Arrow-Right text-40"></i>
-                  </p>
-                </b-pagination>
-              </b-col>
-            </b-row>
           </b-card>
         </b-col>
 
@@ -1194,6 +1151,7 @@ export default {
       product_filter:[],
       isLoading: true,
       GrandTotal: 0,
+      subTotal: 0,
       total: 0,
       Ref: "",
       clients: [],
@@ -1230,7 +1188,7 @@ export default {
           GrandTotal: "",
           paid_amount: ""
         },
-        
+
         details: [],
         setting: {
           logo: "",
@@ -1500,7 +1458,7 @@ export default {
             }else{
               this.CreatePOS();
             }
-       
+
         }
       });
     },
@@ -1843,7 +1801,7 @@ export default {
         this.makeToast("danger", this.$t("InvalidData"), this.$t("Failed"));
       } else {
 
-        
+
         axios
           .post("pos/CreatePOS", {
             client_id: this.sale.client_id,
@@ -1953,6 +1911,7 @@ export default {
         this.product.discount_Method = "2";
         this.product.product_id = response.data.id;
         this.product.name = response.data.name;
+        this.product.image = response.data.image;
         this.product.Net_price = response.data.Net_price;
         this.product.Total_price = response.data.Total_price;
         this.product.Unit_price = response.data.Unit_price;
@@ -1981,9 +1940,9 @@ export default {
         this.details[i].subtotal = parseFloat(
           this.details[i].quantity * this.details[i].Net_price + tax
         );
-
         this.total = parseFloat(this.total + this.details[i].subtotal);
       }
+      this.subTotal = parseFloat(this.total);
       const total_without_discount = parseFloat(
         this.total - this.sale.discount
       );
@@ -2062,7 +2021,7 @@ export default {
       this.$forceUpdate();
     },
 
-  
+
     //---------- keyup OrderTax
     keyup_OrderTax() {
       if (isNaN(this.sale.tax_rate)) {
@@ -2114,7 +2073,7 @@ export default {
             this.$t("Warning")
           );
           this.payment.amount = 0;
-        } 
+        }
         else if (this.payment.amount > this.GrandTotal) {
           this.makeToast(
             "warning",
@@ -2131,7 +2090,7 @@ export default {
     Verified_Received_Amount() {
       if (isNaN(this.payment.received_amount)) {
         this.payment.received_amount = 0;
-      } 
+      }
     },
 
     //-----------------------------------Delete Detail Product ------------------------------\\
@@ -2160,6 +2119,7 @@ export default {
       this.sale.discount = 0;
       this.GrandTotal = 0;
       this.total = 0;
+      this.subTotal = 0;
       this.category_id = "";
       this.brand_id = "";
       this.getProducts(1);
@@ -2230,7 +2190,7 @@ export default {
 
     },
 
-   
+
 
     //---------------------------------- Check if Product Exist in Order List ---------------------\\
 

@@ -19,3 +19,6 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+
+/public/images/brands
+/public/images/products

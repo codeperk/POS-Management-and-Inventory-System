@@ -731,6 +731,7 @@ class ProductsController extends BaseController
         $data = [];
         $item['id'] = $Product_data['id'];
         $item['name'] = $Product_data['name'];
+        $item['image'] = $Product_data['image'];
         $item['Type_barcode'] = $Product_data['Type_barcode'];
         $item['unit_id'] = $Product_data['unit']->id;
         $item['unit'] = $Product_data['unit']->ShortName;
@@ -841,7 +842,7 @@ class ProductsController extends BaseController
         $data_collection = $collection->slice($offSet, $perPage)->values();
 
         $products = new LengthAwarePaginator($data_collection, count($data), $perPage, Paginator::resolveCurrentPage(), array('path' => Paginator::resolveCurrentPath()));
-       
+
          //get warehouses assigned to user
          $user_auth = auth()->user();
          if($user_auth->is_all_warehouses){
@@ -850,7 +851,7 @@ class ProductsController extends BaseController
              $warehouses_id = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
              $warehouses = Warehouse::where('deleted_at', '=', null)->whereIn('id', $warehouses_id)->get(['id', 'name']);
          }
- 
+
         return response()->json([
             'products' => $products,
             'warehouses' => $warehouses,
@@ -889,7 +890,7 @@ class ProductsController extends BaseController
              $warehouses_id = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
              $warehouses = Warehouse::where('deleted_at', '=', null)->whereIn('id', $warehouses_id)->get(['id', 'name']);
          }
-        
+
         return response()->json(['warehouses' => $warehouses]);
 
     }
@@ -1010,7 +1011,7 @@ class ProductsController extends BaseController
                               ->where('deleted_at', null)
                               ->get();
 
-      
+
         $units = Unit::where('deleted_at', null)
             ->where('base_unit', null)
             ->get();
