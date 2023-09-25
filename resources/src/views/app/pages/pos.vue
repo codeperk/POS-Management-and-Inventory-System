@@ -98,8 +98,8 @@
                         </ul>
                     </div>
                 </b-col>
-                <b-col md="12" class="ml-3 d-flex justify-content-between align-items-center">
-                    <h3 class="font-weight-bold mb-0">{{ $t("Brands") }}</h3>
+                <b-col md="12" class="d-flex justify-content-between align-items-center">
+                    <h3 class="ml-3 font-weight-bold mb-0">{{ $t("Brands") }}</h3>
                     <b-pagination
                         @change="BrandonPageChanged"
                         :total-rows="brand_totalRows"
@@ -156,8 +156,8 @@
                     </b-row>
                 </b-col>
                 <!--  -->
-                <b-col md="12" class="ml-3 mt-5 d-flex justify-content-between align-items-center">
-                    <h3 class="font-weight-bold mb-0">{{ $t("Select Product") }}</h3>
+                <b-col md="12" class="mt-5 d-flex justify-content-between align-items-center">
+                    <h3 class="ml-3 font-weight-bold mb-0">{{ $t("Select Product") }}</h3>
                     <b-pagination
                         @change="Product_onPageChanged"
                         :total-rows="product_totalRows"
