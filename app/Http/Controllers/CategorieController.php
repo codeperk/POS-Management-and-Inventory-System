@@ -48,6 +48,19 @@ class CategorieController extends BaseController
         ]);
     }
 
+    //-------------- Get First Level Categories ---------------\\
+
+    public function getFirstLevelCategories(Request $request)
+    {
+        $this->authorizeForUser($request->user('api'), 'view', Category::class);
+
+        $categories = Category::where('deleted_at', '=', null)->where('parent_id',0)->get();
+
+        return response()->json([
+            'categories' => $categories,
+        ]);
+    }
+
     //-------------- Store New Category ---------------\\
 
     public function store(Request $request)
@@ -62,6 +75,7 @@ class CategorieController extends BaseController
         Category::create([
             'code' => $request['code'],
             'name' => $request['name'],
+            'parent_id' => $request['parent_id'] ?? 0
         ]);
         return response()->json(['success' => true]);
     }
@@ -70,7 +84,7 @@ class CategorieController extends BaseController
 
     public function show($id){
         //
-    
+
     }
 
     //-------------- Update Category ---------------\\
@@ -87,6 +101,7 @@ class CategorieController extends BaseController
         Category::whereId($id)->update([
             'code' => $request['code'],
             'name' => $request['name'],
+            'parent_id' => $request['parent_id'] ?? 0
         ]);
         return response()->json(['success' => true]);
 

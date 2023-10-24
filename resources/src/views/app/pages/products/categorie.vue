@@ -15,9 +15,9 @@
         @on-search="onSearch"
         :search-options="{
         enabled: true,
-        placeholder: $t('Search_this_table'),  
+        placeholder: $t('Search_this_table'),
       }"
-        :select-options="{ 
+        :select-options="{
           enabled: true ,
           clearSelectionText: '',
         }"
@@ -61,6 +61,22 @@
       <b-modal hide-footer size="md" id="New_Category" :title="editmode?$t('Edit'):$t('Add')">
         <b-form @submit.prevent="Submit_Category">
           <b-row>
+            <!-- Parent Category -->
+            <b-col md="12">
+                <validation-provider name="category">
+                <b-form-group slot-scope="{ valid, errors }" :label="$t('Parent Category')">
+                    <v-select
+                    :class="{'is-invalid': !!errors.length}"
+                    :state="errors[0] ? false : (valid ? true : null)"
+                    :reduce="label => label.value"
+                    :placeholder="$t('Choose_Category')"
+                    v-model="category.parent_id"
+                    :options="categoriesOptions.map(categoriesOptions => ({label: categoriesOptions.name, value: categoriesOptions.id}))"
+                    />
+                    <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                </b-form-group>
+                </validation-provider>
+            </b-col>
             <!-- Code category -->
             <b-col md="12">
               <validation-provider
@@ -141,12 +157,14 @@ export default {
       search: "",
       limit: "10",
       categories: [],
+      categoriesOptions: [],
       editmode: false,
 
       category: {
         id: "",
         name: "",
-        code: ""
+        code: "",
+        parent_id: ""
       }
     };
   },
@@ -187,7 +205,7 @@ export default {
     onPageChange({ currentPage }) {
       if (this.serverParams.page !== currentPage) {
         this.updateParams({ page: currentPage });
-        this.Get_Categories(currentPage);
+        this.Get_ALL_Categories(currentPage);
       }
     },
 
@@ -196,7 +214,7 @@ export default {
       if (this.limit !== currentPerPage) {
         this.limit = currentPerPage;
         this.updateParams({ page: 1, perPage: currentPerPage });
-        this.Get_Categories(1);
+        this.Get_ALL_Categories(1);
       }
     },
 
@@ -216,14 +234,14 @@ export default {
           field: params[0].field
         }
       });
-      this.Get_Categories(this.serverParams.page);
+      this.Get_ALL_Categories(this.serverParams.page);
     },
 
     //---- Event on Search
 
     onSearch(value) {
       this.search = value.searchTerm;
-      this.Get_Categories(this.serverParams.page);
+      this.Get_ALL_Categories(this.serverParams.page);
     },
 
     //---- Validation State Form
@@ -269,16 +287,35 @@ export default {
 
     //------------------------------ Modal (Update category) -------------------------------\\
     Edit_category(category) {
-      this.Get_Categories(this.serverParams.page);
+      this.Get_ALL_Categories(this.serverParams.page);
+      this.Get_Categories();
       this.reset_Form();
       this.category = category;
       this.editmode = true;
       this.$bvModal.show("New_Category");
     },
 
+    //--------------------------Get Categories List ---------------------------\\
+
+    Get_Categories() {
+      axios
+        .post(
+          "categories/first_level"
+        )
+        .then(response => {
+          this.categoriesOptions = response.data.categories;
+          this.isLoading = false;
+        })
+        .catch(response => {
+          setTimeout(() => {
+            this.isLoading = false;
+          }, 500);
+        });
+    },
+
     //--------------------------Get ALL Categories & Sub category ---------------------------\\
 
-    Get_Categories(page) {
+    Get_ALL_Categories(page) {
       // Start the progress bar.
       NProgress.start();
       NProgress.set(0.1);
@@ -318,7 +355,8 @@ export default {
       axios
         .post("categories", {
           name: this.category.name,
-          code: this.category.code
+          code: this.category.code,
+          parent_id: this.category.parent_id ?? 0
         })
         .then(response => {
           this.SubmitProcessing = false;
@@ -341,7 +379,8 @@ export default {
       axios
         .put("categories/" + this.category.id, {
           name: this.category.name,
-          code: this.category.code
+          code: this.category.code,
+          parent_id: this.category.parent_id ?? 0
         })
         .then(response => {
           this.SubmitProcessing = false;
@@ -450,18 +489,21 @@ export default {
   //----------------------------- Created function-------------------
 
   created: function() {
-    this.Get_Categories(1);
+    this.Get_ALL_Categories(1);
+    this.Get_Categories();
 
     Fire.$on("Event_Category", () => {
       setTimeout(() => {
-        this.Get_Categories(this.serverParams.page);
+        this.Get_ALL_Categories(this.serverParams.page);
+        this.Get_Categories();
         this.$bvModal.hide("New_Category");
       }, 500);
     });
 
     Fire.$on("Delete_Category", () => {
       setTimeout(() => {
-        this.Get_Categories(this.serverParams.page);
+        this.Get_ALL_Categories(this.serverParams.page);
+        this.Get_Categories();
       }, 500);
     });
   }
