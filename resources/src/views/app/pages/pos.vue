@@ -1004,53 +1004,46 @@
           <b-modal hide-footer size="lg" id="New_Customer" :title="$t('Add')">
             <b-form @submit.prevent="Submit_Customer">
               <b-row>
+                <!-- Customer Phone -->
+                <b-col md="6" sm="12">
+                    <validation-provider
+                        name="Phone customer"
+                        :rules="{ required: true, regex: /^\d*\.?\d*$/}"
+                        v-slot="validationContext"
+                    >
+                        <b-form-group :label="$t('Phone') + ' ' + '*'">
+                        <b-form-input
+                            :state="getValidationState(validationContext)"
+                            aria-describedby="Phone-feedback"
+                            label="Phone"
+                            v-model="client.phone"
+                            :placeholder="$t('Phone')"
+                        ></b-form-input>
+                        <b-form-invalid-feedback id="Phone-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                        </b-form-group>
+                    </validation-provider>
+                </b-col>
+
                 <!-- Customer Name -->
                 <b-col md="6" sm="12">
-                  <validation-provider
-                    name="Name Customer"
-                    :rules="{ required: true}"
-                    v-slot="validationContext"
-                  >
-                    <b-form-group :label="$t('CustomerName') + ' ' + '*'">
+                    <b-form-group :label="$t('CustomerName')">
                       <b-form-input
-                        :state="getValidationState(validationContext)"
                         aria-describedby="name-feedback"
                         label="name"
                         v-model="client.name"
                         :placeholder="$t('CustomerName')"
                       ></b-form-input>
-                      <b-form-invalid-feedback id="name-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
                     </b-form-group>
-                  </validation-provider>
                 </b-col>
 
                 <!-- Customer Email -->
                 <b-col md="6" sm="12">
-                  <validation-provider
-                    name="Email customer"
-                    :rules="{ required: true}"
-                    v-slot="validationContext"
-                  >
-                    <b-form-group :label="$t('Email') + ' ' + '*'">
+                    <b-form-group :label="$t('Email')">
                       <b-form-input
-                        :state="getValidationState(validationContext)"
                         aria-describedby="Email-feedback"
                         label="Email"
                         v-model="client.email"
                          :placeholder="$t('Email')"
-                      ></b-form-input>
-                      <b-form-invalid-feedback id="Email-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
-                    </b-form-group>
-                  </validation-provider>
-                </b-col>
-
-                <!-- Customer Phone -->
-                <b-col md="6" sm="12">
-                    <b-form-group :label="$t('Phone')">
-                      <b-form-input
-                        label="Phone"
-                        v-model="client.phone"
-                        :placeholder="$t('Phone')"
                       ></b-form-input>
                     </b-form-group>
                 </b-col>

@@ -68,22 +68,21 @@ class ClientController extends BaseController
         $this->authorizeForUser($request->user('api'), 'create', Client::class);
 
         $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|unique:clients',
-            'email' => Rule::unique('clients')->where(function ($query) {
+            'phone' => 'required|unique:clients',
+            'phone' => Rule::unique('clients')->where(function ($query) {
                 return $query->where('deleted_at', '=', null);
             }),
         ],[
-            'email.unique' => 'This Email already taken.',
+            'phone.unique' => 'This Phone No is already registered.',
         ]
     );
 
         Client::create([
-            'name' => $request['name'],
+            'name' => $request['name'] ?? $request['phone'],
             'code' => $this->getNumberOrder(),
             'adresse' => $request['adresse'],
             'phone' => $request['phone'],
-            'email' => $request['email'],
+            'email' => $request['email'] ?? "customer@saharamartindia.com",
             'country' => $request['country'],
             'city' => $request['city'],
         ]);
@@ -94,7 +93,7 @@ class ClientController extends BaseController
 
     public function show($id){
         //
-        
+
     }
 
     //------------- Update Customer -------------\\
@@ -103,7 +102,7 @@ class ClientController extends BaseController
     {
         $this->authorizeForUser($request->user('api'), 'update', Client::class);
         $this->validate($request, [
-            
+
             'email' => 'required|unique:clients',
             'email' => Rule::unique('clients')->ignore($id)->where(function ($query) {
                 return $query->where('deleted_at', '=', null);
@@ -218,7 +217,7 @@ class ClientController extends BaseController
             } else {
                 return null;
             }
-           
+
             $rules = array('email' => 'required|email|unique:clients');
             //-- Create New Client
             foreach ($data as $key => $value) {
@@ -226,7 +225,7 @@ class ClientController extends BaseController
 
                 $validator = Validator::make($input, $rules);
                 if (!$validator->fails()) {
-                    
+
                     Client::create([
                         'name' => $value['name'] == '' ? null : $value['name'],
                         'code' => $this->getNumberOrder(),
