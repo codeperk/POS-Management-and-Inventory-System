@@ -25,6 +25,7 @@
     input{
         background-color: unset;
         box-shadow: unset !important;
+        padding: 8px 8px 8px 45px !important;
     }
   }
   .footer_panel{
@@ -60,8 +61,11 @@
     color: #05070b;
     font-weight: bolder;
 }
-  #pos .pos-detail{
-    height: 42vh!important;
+  #pos .pos-detail-wrapper{
+    height: 90%;
+    .pos-detail{
+        height: 100%;
+    }
   }
   #pos .pos-detail .table-responsive{
     max-height: 40vh!important;
@@ -86,9 +90,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 2px 0;
+    padding: 0;
     span{
-        font-size: 1rem;
+        font-size: 0.9rem;
         font-weight: 600;
         color: grey;
     }
@@ -97,6 +101,7 @@
         color: #05070b;
         input{
             width: 100px;
+            height: 30px;
             padding: 0;
             background: unset;
             border: unset;
@@ -116,21 +121,21 @@
   }
 
   #pos .grandtotal{
-    margin-top: 10px;
-    margin-bottom: 20px;
-    font-size: 1.2rem;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 1rem;
     font-weight: 800;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 0;
+    padding: 8px 0;
     border-bottom: 1px solid #dfdbdbf0;
     border-top: 1px dashed #dfdbdbf0;
   }
   #pos .list-grid .list-item .list-thumb img {
     width: 100%!important;
-    height: 170px!important;
-    max-height: 170px!important;
+    height: 70px!important;
+    max-height: 70px!important;
     object-fit: cover;
   }
 
@@ -146,6 +151,14 @@
   img{
     mix-blend-mode: multiply;
   }
+}
+
+.page-link{
+    padding: 0.25rem 0.5rem !important;
+}
+
+.page-item{
+    margin: 0 5px !important;
 }
 
 .centred{
@@ -312,17 +325,32 @@ padding: 8px;
         margin-bottom: 40px;
     }
 }
+.cart-items-card{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    .form-row{
+        flex: 1;
+    }
+}
+.cart-item-wrapper{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 23px;
+}
+
 .cart-item{
     display: flex;
+    align-items: center;
     padding: 1em 0;
     border-bottom: 2px solid #dfdbdbf0;
     .product-image{
         border-radius: 12px;
         outline: 2px solid #dfdbdbf0;
         position: relative;
+        height: fit-content;
         img{
             width: 7em;
-            height: 7em;
             border-radius: 12px;
         }
         .edit-button{

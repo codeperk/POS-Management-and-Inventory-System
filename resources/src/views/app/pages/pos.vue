@@ -8,7 +8,7 @@
       <b-row v-if="!isLoading" class="section">
 
         <!-- Card right Of Products -->
-        <b-col md="9" class="products section">
+        <b-col md="6" class="products section">
           <b-card no-body  class="list-grid">
             <!-- Header -->
             <div class="main-header">
@@ -98,7 +98,7 @@
                         </ul>
                     </div>
                 </b-col>
-                <b-col md="12" class="d-flex justify-content-between align-items-center">
+                <!-- <b-col md="12" class="d-flex justify-content-between align-items-center">
                     <h3 class="ml-3 font-weight-bold mb-0">{{ $t("Brands") }}</h3>
                     <b-pagination
                         @change="BrandonPageChanged"
@@ -117,9 +117,9 @@
                             <i class="i-Arrow-Right text-25"></i>
                         </p>
                     </b-pagination>
-                </b-col>
+                </b-col> -->
                 <!-- Brands -->
-                <b-col md="12">
+                <!-- <b-col md="12">
                     <b-row>
                         <div class="col-md-12 d-flex flex-row flex-wrap bd-highlight list-item mt-2">
                             <div
@@ -154,10 +154,10 @@
                             </div>
                         </div>
                     </b-row>
-                </b-col>
+                </b-col> -->
                 <!--  -->
-                <b-col md="12" class="mt-5 d-flex justify-content-between align-items-center">
-                    <h3 class="ml-3 font-weight-bold mb-0">{{ $t("Select Product") }}</h3>
+                <b-col md="12" class="d-flex justify-content-between align-items-center">
+                    <h4 class="ml-3 font-weight-bold mb-0">{{ $t("Select Product") }}</h4>
                     <b-pagination
                         @change="Product_onPageChanged"
                         :total-rows="product_totalRows"
@@ -190,7 +190,7 @@
                       class="product-card-details card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center"
                     >
                       <div class="w-40 w-sm-100 item-title">{{product.name}}</div>
-                      <p class="text-muted text-small w-15 w-sm-100 mb-1">{{formatNumber(product.qte_sale , 0)}} {{product.unitSale}} Available</p>
+                      <p class="text-muted text-small w-15 w-sm-100 mb-1">{{formatNumber(product.qte_sale , 0)}} {{product.unitSale}} Avl.</p>
 
                       <span class="item-price w-15 w-sm-100">{{currentUser.currency}}{{formatNumber(product.Net_price , 2)}}<span class="text-muted text-small font-weight-600"> / {{product.unitSale}}</span></span>
                       <p
@@ -206,15 +206,15 @@
         </b-col>
 
         <!-- Card Left Panel Details Sale-->
-        <b-col md="3" class="section">
+        <b-col md="6" class="section">
           <b-card no-body class="card-order border-left">
 
             <validation-observer ref="create_pos">
               <b-form @submit.prevent="Submit_Pos">
-                <b-card-body>
-                  <b-row>
+                <b-card-body class="cart-items-card">
+                  <b-row class="form-row">
                     <!-- Customer -->
-                    <b-col lg="12" md="12" sm="12">
+                    <b-col lg="6" md="6" sm="6">
                       <validation-provider name="Customer" :rules="{ required: true}">
                         <b-input-group slot-scope="{ valid, errors }" class="input-customer">
                           <v-select
@@ -238,9 +238,9 @@
                     </b-col>
 
                     <!-- warehouse -->
-                    <b-col lg="12" md="12" sm="12">
+                    <b-col lg="6" md="6" sm="6">
                       <validation-provider name="warehouse" :rules="{ required: true}">
-                        <b-form-group slot-scope="{ valid, errors }" class="mt-2">
+                        <b-form-group slot-scope="{ valid, errors }">
                           <v-select
                             :class="{'is-invalid': !!errors.length}"
                             :state="errors[0] ? false : (valid ? true : null)"
@@ -256,68 +256,70 @@
                     </b-col>
 
                     <!-- Details Product  -->
-                    <b-col md="12" class="mt-2">
+                    <b-col md="12" class="pos-detail-wrapper">
                       <div class="pos-detail">
-                        <h3 class="font-weight-bold">{{$t('Detail Items')}}</h3>
+                        <h4 class="font-weight-bold">{{$t('Detail Items')}}</h4>
                         <div class="empty-cart" v-if="details.length <= 0">
                             <img src="/images/icons/empty-cart.svg" v-bind:alt="$t('NodataAvailable')">
                             <h4 class="font-weight-bold text-center">{{$t('NodataAvailable')}}</h4>
                         </div>
-                        <div v-for="(detail, index) in details" :key="index" class="cart-item">
-                            <div class="product-image">
-                                <img alt :src="'/images/products/'+detail.image" onerror="if (this.src != '/images/products/no-image.png') this.src = '/images/products/no-image.png';" />
-                                <a class="edit-button" @click="Modal_Updat_Detail(detail)" title="Edit Product Price">
-                                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M21.2799 6.40005L11.7399 15.94C10.7899 16.89 7.96987 17.33 7.33987 16.7C6.70987 16.07 7.13987 13.25 8.08987 12.3L17.6399 2.75002C17.8754 2.49308 18.1605 2.28654 18.4781 2.14284C18.7956 1.99914 19.139 1.92124 19.4875 1.9139C19.8359 1.90657 20.1823 1.96991 20.5056 2.10012C20.8289 2.23033 21.1225 2.42473 21.3686 2.67153C21.6147 2.91833 21.8083 3.21243 21.9376 3.53609C22.0669 3.85976 22.1294 4.20626 22.1211 4.55471C22.1128 4.90316 22.0339 5.24635 21.8894 5.5635C21.7448 5.88065 21.5375 6.16524 21.2799 6.40005V6.40005Z" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M11 4H6C4.93913 4 3.92178 4.42142 3.17163 5.17157C2.42149 5.92172 2 6.93913 2 8V18C2 19.0609 2.42149 20.0783 3.17163 20.8284C3.92178 21.5786 4.93913 22 6 22H17C19.21 22 20 20.2 20 18V13" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                </a>
-                            </div>
-                            <div class="product-details">
-                                <div class="product-header">
-                                    <div class="product-title">
-                                        <span>{{detail.name}}</span>
-                                        <span class="product-code">{{detail.code}}</span>
-                                    </div>
-                                    <a class="delete-button" @click="delete_Product_Detail(detail.detail_id)" title="Delete">
+                        <div v-if="details.length > 0" class="cart-item-wrapper">
+                            <div v-for="(detail, index) in details" :key="index" class="cart-item">
+                                <div class="product-image">
+                                    <img alt :src="'/images/products/'+detail.image" onerror="if (this.src != '/images/products/no-image.png') this.src = '/images/products/no-image.png';" />
+                                    <a class="edit-button" @click="Modal_Updat_Detail(detail)" title="Edit Product Price">
                                         <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M20.5001 6H3.5" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
-                                            <path d="M18.8332 8.5L18.3732 15.3991C18.1962 18.054 18.1077 19.3815 17.2427 20.1907C16.3777 21 15.0473 21 12.3865 21H11.6132C8.95235 21 7.62195 21 6.75694 20.1907C5.89194 19.3815 5.80344 18.054 5.62644 15.3991L5.1665 8.5" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
-                                            <path d="M9.5 11L10 16" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
-                                            <path d="M14.5 11L14 16" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
-                                            <path d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6" stroke="#1C274C" stroke-width="1.5"/>
+                                            <path d="M21.2799 6.40005L11.7399 15.94C10.7899 16.89 7.96987 17.33 7.33987 16.7C6.70987 16.07 7.13987 13.25 8.08987 12.3L17.6399 2.75002C17.8754 2.49308 18.1605 2.28654 18.4781 2.14284C18.7956 1.99914 19.139 1.92124 19.4875 1.9139C19.8359 1.90657 20.1823 1.96991 20.5056 2.10012C20.8289 2.23033 21.1225 2.42473 21.3686 2.67153C21.6147 2.91833 21.8083 3.21243 21.9376 3.53609C22.0669 3.85976 22.1294 4.20626 22.1211 4.55471C22.1128 4.90316 22.0339 5.24635 21.8894 5.5635C21.7448 5.88065 21.5375 6.16524 21.2799 6.40005V6.40005Z" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M11 4H6C4.93913 4 3.92178 4.42142 3.17163 5.17157C2.42149 5.92172 2 6.93913 2 8V18C2 19.0609 2.42149 20.0783 3.17163 20.8284C3.92178 21.5786 4.93913 22 6 22H17C19.21 22 20 20.2 20 18V13" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>
                                     </a>
                                 </div>
-                                <div class="product-calculations">
-                                    <div class="product-quantity">
-                                        <b-input-group>
-                                            <b-input-group-prepend>
-                                                <span
-                                                class="counter-btn minus"
-                                                @click="decrement(detail ,detail.detail_id)"
-                                                >
-                                                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M6 12L18 12" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                    </svg>
-                                                </span>
-                                            </b-input-group-prepend>
-
-                                            <span class="counter-value">{{detail.quantity}}</span>
-
-                                            <b-input-group-append>
-                                                <span
-                                                class="counter-btn plus"
-                                                @click="increment(detail.detail_id)"
-                                                >
-                                                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M6 12H18M12 6V18" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                    </svg>
-                                                </span>
-                                            </b-input-group-append>
-                                        </b-input-group>
+                                <div class="product-details">
+                                    <div class="product-header">
+                                        <div class="product-title">
+                                            <span>{{detail.name}}</span>
+                                            <!-- <span class="product-code">{{detail.code}}</span> -->
+                                        </div>
+                                        <a class="delete-button" @click="delete_Product_Detail(detail.detail_id)" title="Delete">
+                                            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M20.5001 6H3.5" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
+                                                <path d="M18.8332 8.5L18.3732 15.3991C18.1962 18.054 18.1077 19.3815 17.2427 20.1907C16.3777 21 15.0473 21 12.3865 21H11.6132C8.95235 21 7.62195 21 6.75694 20.1907C5.89194 19.3815 5.80344 18.054 5.62644 15.3991L5.1665 8.5" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
+                                                <path d="M9.5 11L10 16" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
+                                                <path d="M14.5 11L14 16" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
+                                                <path d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6" stroke="#1C274C" stroke-width="1.5"/>
+                                            </svg>
+                                        </a>
                                     </div>
-                                    <div class="product-price">{{detail.quantity}} x {{currentUser.currency}}{{formatNumber(detail.Total_price, 2)}}</div>
+                                    <div class="product-calculations">
+                                        <div class="product-quantity">
+                                            <b-input-group>
+                                                <b-input-group-prepend>
+                                                    <span
+                                                    class="counter-btn minus"
+                                                    @click="decrement(detail ,detail.detail_id)"
+                                                    >
+                                                        <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M6 12L18 12" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        </svg>
+                                                    </span>
+                                                </b-input-group-prepend>
+
+                                                <span class="counter-value">{{detail.quantity}}</span>
+
+                                                <b-input-group-append>
+                                                    <span
+                                                    class="counter-btn plus"
+                                                    @click="increment(detail.detail_id)"
+                                                    >
+                                                        <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M6 12H18M12 6V18" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        </svg>
+                                                    </span>
+                                                </b-input-group-append>
+                                            </b-input-group>
+                                        </div>
+                                        <div class="product-price">{{detail.quantity}} x {{currentUser.currency}}{{formatNumber(detail.Total_price, 2)}}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -409,14 +411,14 @@
 
                       <!-- <h3 class="font-weight-bold pl-3">{{$t('Payment Method')}}</h3> -->
 
-                      <b-col md="12" sm="12">
-                        <b-button type="submit" variant="primary mt-3 btn-block" class="checkout">
-                          {{ $t("Proceed for payment") }}
+                      <b-col md="6" sm="6">
+                        <b-button @click="Reset_Pos()" variant="danger btn-block mt-2" class="checkout">
+                          {{ $t("Reset") }}
                         </b-button>
                       </b-col>
-                      <b-col md="12" sm="12">
-                        <b-button @click="Reset_Pos()" variant="danger btn-block mt-3" class="checkout">
-                          {{ $t("Reset") }}
+                      <b-col md="6" sm="6">
+                        <b-button type="submit" variant="primary mt-2 btn-block" class="checkout">
+                          {{ $t("Proceed for payment") }}
                         </b-button>
                       </b-col>
                     </b-row>
@@ -578,7 +580,7 @@
         </b-col>
 
         <!-- Sidebar Brand -->
-        <b-sidebar id="sidebar-brand" :title="$t('ListofBrand')" bg-variant="white" right shadow>
+        <!-- <b-sidebar id="sidebar-brand" :title="$t('ListofBrand')" bg-variant="white" right shadow>
           <div class="px-3 py-2">
             <b-row>
               <div class="col-md-12 d-flex flex-row flex-wrap bd-highlight list-item mt-2">
@@ -639,10 +641,10 @@
               </b-col>
             </b-row>
           </div>
-        </b-sidebar>
+        </b-sidebar> -->
 
         <!-- Sidebar category -->
-        <b-sidebar
+        <!-- <b-sidebar
           id="sidebar-category"
           :title="$t('ListofCategory')"
           bg-variant="white"
@@ -709,7 +711,7 @@
               </b-col>
             </b-row>
           </div>
-        </b-sidebar>
+        </b-sidebar> -->
 
         <!-- Modal Show Invoice POS-->
         <b-modal hide-footer size="sm" scrollable id="Show_invoice" :title="$t('Invoice_POS')">
