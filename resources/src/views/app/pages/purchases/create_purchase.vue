@@ -88,6 +88,10 @@
                       @blur="handleBlur"
                       ref="product_autocomplete"
                       class="autocomplete-input" />
+
+                    <b-button variant="primary" v-if="product_filter.length === 0 && search_input.trim() !== ''" @click="AddProduct()"  class="w-100">
+                        <span>Add New Product</span>
+                    </b-button>
                     <ul class="autocomplete-result-list" v-show="focused">
                       <li class="autocomplete-result" v-for="product_fil in product_filter" @mousedown="SearchProduct(product_fil)">{{getResultValue(product_fil)}}</li>
                     </ul>
@@ -574,6 +578,15 @@
       </b-modal>
     </validation-observer>
 
+    <!-- Add Product -->
+    <validation-observer ref="Create_Product">
+      <b-modal hide-footer size="xl" id="New_Product" :title="$t('Add')">
+        <div style="max-height: 80vh; width: 100%; overflow-y: auto;">
+            <Add_product :isInModal="true" @close="closeModal" />
+        </div>
+      </b-modal>
+    </validation-observer>
+
   </div>
 </template>
 
@@ -582,7 +595,12 @@
 import { mapActions, mapGetters } from "vuex";
 import NProgress from "nprogress";
 
+import Add_product from "../products/Add_product.vue";
+
 export default {
+  components: {
+    Add_product
+  },
   metaInfo: {
     title: "Create Purchase"
   },
@@ -981,6 +999,15 @@ export default {
             })
           .catch(error => {
           });
+    },
+
+    AddProduct(){
+        this.$bvModal.show("New_Product");
+    },
+
+    closeModal(){
+        this.$bvModal.hide("New_Product");
+        this.Selected_Warehouse(this.purchase.warehouse_id);
     },
 
     //----------------------------------------- Add product -------------------------\\

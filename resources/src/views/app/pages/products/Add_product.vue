@@ -325,7 +325,7 @@
                       </div>
                     </ValidationProvider>
                   </b-col>
-                  
+
               </b-row>
             </b-card>
           </b-col>
@@ -360,7 +360,7 @@
                       />
                     </div>
                   </b-col>
-                 
+
                 </b-row>
               </div>
             </b-card>
@@ -384,6 +384,12 @@ import VueTagsInput from "@johmun/vue-tags-input";
 import NProgress from "nprogress";
 
 export default {
+  props: {
+    isInModal: {
+      type: Boolean,
+      default: false
+    }
+  },
   metaInfo: {
     title: "Create Product"
   },
@@ -556,7 +562,11 @@ export default {
           // Complete the animation of theprogress bar.
           NProgress.done();
           self.SubmitProcessing = false;
-          this.$router.push({ name: "index_products" });
+          if (this.isInModal) {
+            this.$emit('close');
+          } else {
+            this.$router.push({ name: "index_products" });
+          }
           this.makeToast(
             "success",
             this.$t("Successfully_Created"),
