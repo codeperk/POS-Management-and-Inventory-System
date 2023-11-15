@@ -33,14 +33,24 @@
                 <b-col lg="4" md="4" sm="12" class="mb-3">
                   <validation-provider name="Supplier" :rules="{ required: true}">
                     <b-form-group slot-scope="{ valid, errors }" :label="$t('Supplier') + ' ' + '*'">
-                      <v-select
-                        :class="{'is-invalid': !!errors.length}"
-                        :state="errors[0] ? false : (valid ? true : null)"
-                        v-model="purchase.supplier_id"
-                        :reduce="label => label.value"
-                        :placeholder="$t('Choose_Supplier')"
-                        :options="suppliers.map(suppliers => ({label: suppliers.name, value: suppliers.id}))"
-                      />
+                      <div>
+                        <v-select
+                            :class="{'is-invalid': !!errors.length}"
+                            :state="errors[0] ? false : (valid ? true : null)"
+                            v-model="purchase.supplier_id"
+                            :reduce="label => label.value"
+                            :placeholder="$t('Choose_Supplier')"
+                            :options="suppliers.map(suppliers => ({label: suppliers.name, value: suppliers.id}))"
+                        >
+                            <template slot="no-options" class="w-100">
+                                <b-button variant="primary" @click="New_Provider()"  class="w-100">
+                                    <span>
+                                    <i class="i-Add-User"></i> Add New Supplier
+                                    </span>
+                                </b-button>
+                            </template>
+                        </v-select>
+                      </div>
                       <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                     </b-form-group>
                   </validation-provider>
@@ -68,11 +78,11 @@
                 <!-- Product -->
                 <b-col md="12" class="mb-5">
                   <h6>{{$t('ProductName')}}</h6>
-                 
+
                   <div id="autocomplete" class="autocomplete">
-                    <input 
+                    <input
                      :placeholder="$t('Scan_Search_Product_by_Code_Name')"
-                      @input='e => search_input = e.target.value' 
+                      @input='e => search_input = e.target.value'
                       @keyup="search(search_input)"
                       @focus="handleFocus"
                       @blur="handleBlur"
@@ -462,6 +472,108 @@
         </b-form>
       </b-modal>
     </validation-observer>
+
+    <!-- Add Provider -->
+    <validation-observer ref="Create_Provider">
+      <b-modal hide-footer size="lg" id="New_Provider" :title="$t('Add')">
+        <b-form @submit.prevent="Submit_Provider">
+          <b-row>
+            <!-- Provider Name -->
+            <b-col md="6" sm="12">
+              <validation-provider
+                name="Name Provider"
+                :rules="{ required: true}"
+                v-slot="validationContext"
+              >
+                <b-form-group :label="$t('SupplierName') + ' ' + '*'">
+                  <b-form-input
+                    :state="getValidationState(validationContext)"
+                    aria-describedby="name-feedback"
+                    label="name"
+                    v-model="provider.name"
+                    :placeholder="$t('SupplierName')"
+                  ></b-form-input>
+                  <b-form-invalid-feedback id="name-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                </b-form-group>
+              </validation-provider>
+            </b-col>
+
+            <!-- Provider Email -->
+            <b-col md="6" sm="12">
+              <validation-provider
+                name="Email Provider"
+                :rules="{ required: true}"
+                v-slot="validationContext"
+              >
+                <b-form-group :label="$t('Email') + ' ' + '*'">
+                  <b-form-input
+                    :state="getValidationState(validationContext)"
+                    aria-describedby="Email-feedback"
+                    label="Email"
+                    v-model="provider.email"
+                    :placeholder="$t('Email')"
+                  ></b-form-input>
+                  <b-form-invalid-feedback id="Email-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                </b-form-group>
+              </validation-provider>
+            </b-col>
+
+            <!-- Provider Phone -->
+            <b-col md="6" sm="12">
+                <b-form-group :label="$t('Phone')">
+                  <b-form-input
+                    label="Phone"
+                    v-model="provider.phone"
+                    :placeholder="$t('Phone')"
+                  ></b-form-input>
+                </b-form-group>
+            </b-col>
+
+            <!-- Provider Country -->
+            <b-col md="6" sm="12">
+                <b-form-group :label="$t('Country')">
+                  <b-form-input
+                    label="Country"
+                    v-model="provider.country"
+                    :placeholder="$t('Country')"
+                  ></b-form-input>
+                </b-form-group>
+            </b-col>
+
+            <!-- Provider City -->
+            <b-col md="6" sm="12">
+                <b-form-group :label="$t('City')">
+                  <b-form-input
+                    label="City"
+                    v-model="provider.city"
+                    :placeholder="$t('City')"
+                  ></b-form-input>
+                </b-form-group>
+            </b-col>
+
+            <!-- Provider Adress -->
+            <b-col md="6" sm="12">
+                <b-form-group :label="$t('Adress')">
+                  <b-form-input
+                    label="Adress"
+                    v-model="provider.adresse"
+                    :placeholder="$t('Adress')"
+                  ></b-form-input>
+                </b-form-group>
+            </b-col>
+
+            <b-col md="12" class="mt-3">
+                <b-button variant="primary" type="submit"  :disabled="SubmitProcessing">{{$t('submit')}}</b-button>
+                  <div v-once class="typo__p" v-if="SubmitProcessing">
+                    <div class="spinner sm spinner-primary mt-3"></div>
+                  </div>
+            </b-col>
+
+          </b-row>
+        </b-form>
+      </b-modal>
+    </validation-observer>
+
   </div>
 </template>
 
@@ -538,6 +650,16 @@ export default {
         product_variant_id: "",
         is_imei: "",
         imei_number:"",
+      },
+      provider: {
+        id: "",
+        name: "",
+        code: "",
+        phone: "",
+        email: "",
+        country: "",
+        city: "",
+        adresse: ""
       }
     };
   },
@@ -546,6 +668,66 @@ export default {
   },
 
   methods: {
+
+    //------------------------------ Show Modal (create Provider) -------------------------------\\
+    New_Provider() {
+      this.provider = {
+        id: "",
+        name: "",
+        phone: "",
+        email: "",
+        country: "",
+        city: "",
+        adresse: ""
+      };
+      this.editmode = false;
+      this.$bvModal.show("New_Provider");
+    },
+
+    //------------- Submit Validation Create & Edit Provider
+    Submit_Provider() {
+      this.$refs.Create_Provider.validate().then(success => {
+        if (!success) {
+          this.makeToast(
+            "danger",
+            this.$t("Please_fill_the_form_correctly"),
+            this.$t("Failed")
+          );
+        } else {
+            this.Create_Provider();
+        }
+      });
+    },
+
+    //---------------------------- Create Provider  -----------------------\\
+    Create_Provider() {
+      this.SubmitProcessing = true;
+      axios
+        .post("providers", {
+          name: this.provider.name,
+          email: this.provider.email,
+          phone: this.provider.phone,
+          country: this.provider.country,
+          city: this.provider.city,
+          adresse: this.provider.adresse
+        })
+        .then(response => {
+          Fire.$emit("Event_Provider");
+          this.GetElements();
+
+          this.makeToast(
+            "success",
+            this.$t("Create.TitleSupplier"),
+            this.$t("Success")
+          );
+          this.SubmitProcessing = false;
+          this.$bvModal.hide("New_Provider");
+        })
+        .catch(error => {
+          this.makeToast("danger", this.$t("InvalidData"), this.$t("Failed"));
+          this.SubmitProcessing = false;
+        });
+    },
 
     //--- Submit Validate Create Purchase
     Submit_Purchase() {
@@ -613,7 +795,7 @@ export default {
       this.detail.tax_percent = detail.tax_percent;
       this.detail.is_imei = detail.is_imei;
       this.detail.imei_number = detail.imei_number;
-      
+
       setTimeout(() => {
         NProgress.done();
         this.$bvModal.show("form_Update_Detail");
@@ -642,7 +824,7 @@ export default {
                 }
               }
             }
-                      
+
           this.details[i].Unit_cost = this.detail.Unit_cost;
           this.details[i].tax_percent = this.detail.tax_percent;
           this.details[i].tax_method = this.detail.tax_method;
@@ -745,7 +927,7 @@ export default {
 
 
     },
-   
+
 
     // get Result Value Search Products
 
@@ -762,7 +944,7 @@ export default {
         this.details.some(detail => detail.code === result.code)
       ) {
         this.makeToast("warning", this.$t("AlreadyAdd"), this.$t("Warning"));
-        
+
       } else {
         this.product.code = result.code;
         this.product.quantity = 1;
